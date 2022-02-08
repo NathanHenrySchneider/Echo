@@ -14,6 +14,7 @@ newLine = "\n"
 global term
 term = True
 
+
 def handle_echo(c):
     global term
     message = c.recv(1024).decode('ascii')
@@ -21,30 +22,35 @@ def handle_echo(c):
     print("handl: " + message)
     c.send(message.encode('ascii'))
     # c.send(newLine.encode('ascii'))
-    # c.close()
-    term = (message != "dne")
+    # term = (message != "dne")
+    # print("Term: " + str(term))
+    if (message == "dne"):
+        term = False
+        c.close()
+    
 
 
 
 def main():
     global term
+    term = True
     # Create socket for client to connect to.
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((HOST, PORT))
 
     s.listen(5)
     print("Server is ready for connection...\n")
-
-    while True and term:
+    
+    while term:
 
         # Establish connection with client.
         c, addr = s.accept()
-        # s.setblocking(1)
+        s.setblocking(1)
 
         # Start a new thread for each individual client.
         print("Starting new client thread.")
-        handle_echo (c,)
-        s.close()
+        handle_echo, (c,)
+    s.close()
     print("server end")
 
 

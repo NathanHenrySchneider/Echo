@@ -9,20 +9,41 @@ global PORT
 PORT = 12345
 global term
 term = True
+global s
+
+
+def echo():
+    global term
+    global s
+    message = input('\nPlease enter your message: ')
+    s.send(message.encode('ascii'))
+    response = s.recv(1024).decode('ascii')
+    print("Echo response: " + response)
+    if (response == "dne"):
+        term = False
 
 def main ():
     global term
-    s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+    global s
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((HOST,PORT))
-    while True and term:
-        print("loop")
-        message = input('\nPlease enter your message: ')
-        s.send(message.encode('ascii'))
-        response = s.recv(1024).decode('ascii')
-        print("Response: " + response)
-        term = (response != "dne")
+
+    while (term):
+        echo()
+
+    # message = input('\nPlease enter your message: ')
+    # s.send(message.encode('ascii'))
+    # response = s.recv(1024).decode('ascii')
     s.close()
-    print("Client end")
+    # while True and term:
+    #     print("loop")
+    #     message = input('\nPlease enter your message: ')
+    #     s.send(message.encode('ascii'))
+    #     response = s.recv(1024).decode('ascii')
+    #     print("Response: " + response)
+    #     term = (response != "dne")
+    # s.close()
+    # print("Client end")
 
 if __name__ == '__main__':
     main()
