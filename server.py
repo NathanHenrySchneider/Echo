@@ -13,20 +13,22 @@ global newLine
 newLine = "\n"
 global term
 term = True
+global inUse
+inUse = False
 
 
 def handle_echo(c):
+    global inUse
+    inUse = True
     global term
     message = c.recv(1024).decode('ascii')
     message = message[::-1]
-    print("handl: " + message)
+    print("Message received from client")
     c.send(message.encode('ascii'))
-    # c.send(newLine.encode('ascii'))
-    # term = (message != "dne")
-    # print("Term: " + str(term))
     if (message == "dne"):
         term = False
-        c.close()
+    c.close()
+    inUse = False
     
 
 
@@ -42,14 +44,11 @@ def main():
     print("Server is ready for connection...\n")
     
     while term:
-
-        # Establish connection with client.
         c, addr = s.accept()
         s.setblocking(1)
-
-        # Start a new thread for each individual client.
-        print("Starting new client thread.")
-        handle_echo, (c,)
+        handle_echo(c)
+        if (not term):
+            break
     s.close()
     print("server end")
 
