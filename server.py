@@ -15,6 +15,8 @@ global term
 term = True
 global inUse
 inUse = False
+global connecting
+connecting = True
 
 
 def handle_echo(c):
@@ -27,7 +29,7 @@ def handle_echo(c):
     c.send(message.encode('ascii'))
     if (message == "dne"):
         term = False
-    c.close()
+    # c.close()
     inUse = False
     
 
@@ -36,10 +38,18 @@ def handle_echo(c):
 def main():
     global term
     term = True
+    global connecting
     # Create socket for client to connect to.
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind((HOST, PORT))
-
+    while connecting:
+        print("Connecting to port")
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.bind((HOST, PORT))
+            connecting = False
+        except:
+            print("Failed to connect\nTrying again")
+            time.sleep(3)
+            
     s.listen(5)
     print("Server is ready for connection...\n")
     
@@ -50,7 +60,7 @@ def main():
         if (not term):
             break
     s.close()
-    print("server end")
+    print("Server End")
 
 
 if __name__ == '__main__':

@@ -23,7 +23,7 @@ def echo():
     print("Echo response: " + response)
     if (response == "dne"):
         term = False
-    s.close()
+    # s.close()
 
 def main ():
     global term
@@ -31,6 +31,8 @@ def main ():
 
     while (term):
         echo()
+    s.close()
+    print("Client End")
 
 if __name__ == '__main__':
     main()
