@@ -12,6 +12,7 @@ PORT = 12345
 global term
 term = True
 global s
+s = None
 
 
 def echo():
