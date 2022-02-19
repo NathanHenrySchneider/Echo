@@ -29,7 +29,6 @@ def echo():
 
 
 def main ():
-    global term
 
     while (term):
         echo()
