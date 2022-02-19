@@ -3,7 +3,7 @@ import time
 from _thread import *
 import threading
 
-from black import NewLine
+# from black import NewLine
 
 global HOST 
 HOST = '127.0.0.1'

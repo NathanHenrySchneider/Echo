@@ -1,7 +1,9 @@
+# Nathan Schneider
+# Martin Nguyen
+
 import socket
-import time
 from _thread import *
-import threading
+
 
 global HOST 
 HOST = '127.0.0.1'
