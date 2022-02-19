@@ -9,19 +9,13 @@ global HOST
 HOST = '127.0.0.1'
 global PORT
 PORT = 12345
-global newLine
-newLine = "\n"
 global term
 term = True
-global inUse
-inUse = False
 global connecting
 connecting = True
 
 
 def handle_echo(c):
-    global inUse
-    inUse = True
     global term
     message = c.recv(1024).decode('ascii')
     message = message[::-1]
@@ -29,16 +23,14 @@ def handle_echo(c):
     c.send(message.encode('ascii'))
     if (message == "dne"):
         term = False
-    # c.close()
-    inUse = False
     
-
 
 
 def main():
     global term
-    term = True
     global connecting
+
+
     # Create socket for client to connect to.
     while connecting:
         print("Connecting to port")
@@ -49,10 +41,10 @@ def main():
         except:
             print("Failed to connect\nTrying again")
             time.sleep(3)
-            
-    s.listen(5)
+
+
+    s.listen(1)
     print("Server is ready for connection...\n")
-    
     while term:
         c, addr = s.accept()
         s.setblocking(1)

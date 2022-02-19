@@ -2,7 +2,7 @@
 # Martin Nguyen
 
 import socket
-from _thread import *
+
 
 
 global HOST 
@@ -25,11 +25,10 @@ def echo():
     print("Echo response: " + response)
     if (response == "dne"):
         term = False
-    # s.close()
+
 
 def main ():
     global term
-    global s
 
     while (term):
         echo()
